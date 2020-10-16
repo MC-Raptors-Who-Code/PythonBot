@@ -16,17 +16,22 @@ async def on_ready():
     await bot.change_presence(status=discord.Status.online, activity=discord.Game("Studying..."))
     print(f'{bot.user} has connected to Discord!')
 
-# unfinished function to list all available gears 
-'''
+# Function to list all available gears 
 @bot.command()
-async def listCogs(ctx, extension):
-    outStrActive = [""]
-    outStrDisabled = [""]
+async def listCogs(ctx):
+    outStrActive = ""
+    outStrDisabled = ""
     for filename in os.listdir('./cogs'):
         if(filename.endswith('.py')):
-            outStrActive[]
+            outStrActive += f'-{filename[:-3]}\n'
         elif(filename.endswith('.py.disabled')):
-'''
+            outStrDisabled += f'-{filename[:-12]}\n'
+    if(outStrActive == ""):
+        outStrActive = "-none\n";
+    if(outStrDisabled == ""):
+        outStrDisabled = "-none\n";    
+    await ctx.send(f'```\nAVAILABLE\n{outStrActive}DISABLED\n{outStrDisabled}```')
+
 # commands for loading and unloading cogs once the bot is running
 @bot.command()
 async def unload(ctx, extension):
@@ -34,9 +39,9 @@ async def unload(ctx, extension):
     if(not (extension == "all")):
         try:
             bot.unload_extension(f'cogs.{extension}')
-            await ctx.send(f'Cog {extension} successfully unloaded')
+            await ctx.send(f'`Cog {extension} successfully unloaded`')
         except commands.errors.ExtensionNotLoaded:
-            await ctx.send(f'Cog {extension} was not initally loaded')
+            await ctx.send(f'`Cog {extension} was not initally loaded`')
     else:
         for filename in os.listdir('./cogs'):
             if( filename.endswith('.py')):
@@ -44,7 +49,7 @@ async def unload(ctx, extension):
                     bot.unload_extension(f'cogs.{filename[:-3]}')
                 except commands.errors.ExtensionNotLoaded:
                     pass
-        await ctx.send('All cogs successfully unloaded')
+        await ctx.send('`All cogs successfully unloaded`')
 
 
 @bot.command()
@@ -53,14 +58,14 @@ async def load(ctx, extension):
     if(not (extension == "all")):
         try:
             bot.load_extension(f'cogs.{extension}')
-            await ctx.send(f'Cog {extension} successfully loaded')
+            await ctx.send(f'`Cog {extension} successfully loaded`')
         except discord.ext.commands.errors.ExtensionNotFound:
-            await ctx.send(f'Cog {extension} not found')
+            await ctx.send(f'`Cog {extension} not found`')
     else:
         for filename in os.listdir('./cogs'):
             if( filename.endswith('.py')):
                 bot.load_extension(f'cogs.{filename[:-3]}')
-        await ctx.send('All cogs successfully loaded')
+        await ctx.send('`All cogs successfully loaded`')
 
 @bot.command()
 async def reload(ctx, extension):
@@ -74,7 +79,7 @@ async def disableCog(ctx, extension):
     await unload(ctx, extension)
     if(os.path.isfile(f'./cogs/{extension}.py')):
         os.rename(f'./cogs/{extension}.py',f'./cogs/{extension}.py.disabled')
-        await ctx.send(f'Cog {extension} successfully disabled')
+        await ctx.send(f'`Cog {extension} successfully disabled`')
     else:
         pass
 
@@ -83,17 +88,17 @@ async def enableCog(ctx, extension):
     extension = extension.lower()
     if(os.path.isfile(f'./cogs/{extension}.py.disabled')):
         os.rename(f'./cogs/{extension}.py.disabled',f'./cogs/{extension}.py')
-        await ctx.send(f'Cog {extension} successfully enabled')
+        await ctx.send(f'`Cog {extension} successfully enabled`')
     else:
         pass
 
 # simple ping command
 @bot.command()
 async def ping(ctx):
-    await ctx.send(f'Pong! {round(bot.latency * 1000)} ms')
+    await ctx.send(f'`Pong! {round(bot.latency * 1000)} ms`')
 
 
-# loads all the extensions
+# loads all the extensions initally 
 for filename in os.listdir('./cogs'):
     if( filename.endswith('.py')):
         bot.load_extension(f'cogs.{filename[:-3]}')
