@@ -12,7 +12,7 @@ bot = commands.Bot(command_prefix = "!")
 
 @bot.event
 async def on_ready():
-    await bot.change_presence(status=discord.Status.online, activity=discord.Game("Studying..."))
+    await bot.change_presence(status=discord.Status.online, activity=discord.Game("In a Meeting..."))
     print(f'{bot.user} has connected to Discord!')
 
 @bot.command()
