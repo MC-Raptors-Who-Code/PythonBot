@@ -14,7 +14,7 @@ class Git_Commands(commands.Cog):
     @commands.command()
     async def sync(self, ctx):  
     	#hardcode location of repo, make more modular going further
-       	result = subprocess.check_output("git pull --no-commit https://github.com/MC-Raptors-Who-Code/PythonBot.git")
+        result = subprocess.check_output("git pull --no-commit https://github.com/MC-Raptors-Who-Code/PythonBot.git", shell=True)
         await ctx.send(f'```{result.decode("utf-8")}```')
 
 def setup(bot):   
