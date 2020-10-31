@@ -102,7 +102,7 @@ async def ping(ctx):
     await ctx.send(f'`Pong! {round(bot.latency * 1000)} ms`')
 
 
-# loads all the extensions
+# loads all the extensions initally
 for filename in os.listdir('./cogs'):
     if( filename.endswith('.py')):
         bot.load_extension(f'cogs.{filename[:-3]}')
