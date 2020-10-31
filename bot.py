@@ -3,6 +3,7 @@ import os
 import discord
 from discord.ext import commands
 from dotenv import load_dotenv
+from time import sleep
 
 
 # loads the token from the .env file
@@ -78,23 +79,25 @@ async def reload(ctx, *extensions):
 
 # commands for disabling and enabling cogs
 @bot.command()
-async def disableCog(ctx, extension):
-    extension = extension.lower()
-    await unload(ctx, extension)
-    if(os.path.isfile(f'./cogs/{extension}.py')):
-        os.rename(f'./cogs/{extension}.py',f'./cogs/{extension}.py.disabled')
-        await ctx.send(f'`Cog {extension} successfully disabled`')
-    else:
-        pass
+async def disableCog(ctx, *extensions):
+    for extension in extensions:
+        extension = extension.lower()
+        await unload(ctx, extension)
+        if(os.path.isfile(f'./cogs/{extension}.py')):
+            os.rename(f'./cogs/{extension}.py',f'./cogs/{extension}.py.disabled')
+            await ctx.send(f'`Cog {extension} successfully disabled`')
+        else:
+            pass
 
 @bot.command()
-async def enableCog(ctx, extension):
-    extension = extension.lower()
-    if(os.path.isfile(f'./cogs/{extension}.py.disabled')):
-        os.rename(f'./cogs/{extension}.py.disabled',f'./cogs/{extension}.py')
-        await ctx.send(f'`Cog {extension} successfully enabled`')
-    else:
-        pass
+async def enableCog(ctx, *extensions):
+    for extension in extensions:
+        extension = extension.lower()
+        if(os.path.isfile(f'./cogs/{extension}.py.disabled')):
+            os.rename(f'./cogs/{extension}.py.disabled',f'./cogs/{extension}.py')
+            await ctx.send(f'`Cog {extension} successfully enabled`')
+        else:
+            pass
 
 # simple ping command
 @bot.command()
@@ -109,3 +112,7 @@ for filename in os.listdir('./cogs'):
 
 # runs the bot
 bot.run(TOKEN)
+
+while(true):
+    print(bot.latency, end='\r')
+    sleep(1)
