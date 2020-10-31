@@ -3,7 +3,6 @@ import os
 import discord
 from discord.ext import commands
 from dotenv import load_dotenv
-from time import sleep
 
 
 # loads the token from the .env file
@@ -112,7 +111,3 @@ for filename in os.listdir('./cogs'):
 
 # runs the bot
 bot.run(TOKEN)
-
-while(true):
-    print(bot.latency, end='\r')
-    sleep(1)
