@@ -1,5 +1,5 @@
 import discord
-import os
+import subprocess
 from discord.ext import commands
 
 class Git_Commands(commands.Cog):
@@ -13,7 +13,8 @@ class Git_Commands(commands.Cog):
 
     @commands.command()
     async def sync(self, ctx):  
-        pass
+    	#hardcode location of repo, make more modular going further
+       	subprocess.call("git pull https://github.com/MC-Raptors-Who-Code/PythonBot.git", shell = True)
 
 def setup(bot):   
     bot.add_cog(Git_Commands(bot))
