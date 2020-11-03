@@ -79,24 +79,51 @@ async def reload(ctx, *extensions):
 # commands for disabling and enabling cogs
 @bot.command()
 async def disableCog(ctx, *extensions):
-    for extension in extensions:
-        extension = extension.lower()
-        await unload(ctx, extension)
-        if(os.path.isfile(f'./cogs/{extension}.py')):
-            os.rename(f'./cogs/{extension}.py',f'./cogs/{extension}.py.disabled')
-            await ctx.send(f'`Cog {extension} successfully disabled`')
-        else:
-            pass
+    if(extensions[0].lower() != 'all'):
+	    for extension in extensions:
+	        extension = extension.lower()
+	        await unload(ctx, extension)
+	        if(os.path.isfile(f'./cogs/{extension}.py')):
+	            os.rename(f'./cogs/{extension}.py',f'./cogs/{extension}.py.disabled')
+	            await ctx.send(f'`Cog {extension} successfully disabled`')
+	        else:
+	            pass
+	else:
+		for filename in os.listdir('./cogs'):
+            if( filename.endswith('.py')):
+	            os.rename(f'./cogs/{extension}.py',f'./cogs/{extension}.py.disabled')
+
 
 @bot.command()
 async def enableCog(ctx, *extensions):
-    for extension in extensions:
-        extension = extension.lower()
-        if(os.path.isfile(f'./cogs/{extension}.py.disabled')):
-            os.rename(f'./cogs/{extension}.py.disabled',f'./cogs/{extension}.py')
-            await ctx.send(f'`Cog {extension} successfully enabled`')
-        else:
-            pass
+	if(extensions[0].lower() != 'all'):
+	    for extension in extensions:
+	        extension = extension.lower()
+	        if(os.path.isfile(f'./cogs/{extension}.py.disabled')):
+	            os.rename(f'./cogs/{extension}.py.disabled',f'./cogs/{extension}.py')
+	            await ctx.send(f'`Cog {extension} successfully enabled`')
+	        else:
+	            pass
+	else:
+		for filename in os.listdir('./cogs'):
+            if( filename.endswith('.py.disabled')):
+	            os.rename(f'./cogs/{extension}.py.disabled',f'./cogs/{extension}.py')
+
+# sync with github repo
+@bot.command()
+async def sync(ctx):
+    #hardcode location of repo, make more modular going further
+    repo = "https://github.com/MC-Raptors-Who-Code/PythonBot.git"
+    disabled_modules = []
+    for filename in os.listdir('./cogs'):
+    	if( filename.endswith('.py.disabled')):
+    		disabled_modules.append(filename[:-12])
+    await enableCog(ctx, *disabled_modules)
+    result = subprocess.check_output(f'git pull --no-commit {repo}', shell=True)
+    await ctx.send(f'```{result.decode("utf-8")}```')
+    await disableCog(ctx, *disabled_modules)
+    await ctx.send('```All Done!```')
+
 
 # simple ping command
 @bot.command()
