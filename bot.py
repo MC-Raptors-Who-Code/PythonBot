@@ -2,6 +2,7 @@
 import os
 import discord
 from discord.ext import commands
+import subprocess
 from dotenv import load_dotenv
 
 
@@ -79,35 +80,26 @@ async def reload(ctx, *extensions):
 # commands for disabling and enabling cogs
 @bot.command()
 async def disableCog(ctx, *extensions):
-    if(extensions[0].lower() != 'all'):
-        for extension in extensions:
-            extension = extension.lower()
-            await unload(ctx, extension)
-            if(os.path.isfile(f'./cogs/{extension}.py')):
-                os.rename(f'./cogs/{extension}.py',f'./cogs/{extension}.py.disabled')
-                await ctx.send(f'`Cog {extension} successfully disabled`')
-            else:
-                pass
-    else:
-        for filename in os.listdir('./cogs'):
-            if( filename.endswith('.py')):
-                os.rename(f'./cogs/{extension}.py',f'./cogs/{extension}.py.disabled')
+    for extension in extensions:
+        extension = extension.lower()
+        await unload(ctx, extension)
+        if(os.path.isfile(f'./cogs/{extension}.py')):
+            os.rename(f'./cogs/{extension}.py',f'./cogs/{extension}.py.disabled')
+            await ctx.send(f'`Cog {extension} successfully disabled`')
+        else:
+            pass
 
 
 @bot.command()
 async def enableCog(ctx, *extensions):
-    if(extensions[0].lower() != 'all'):
-        for extension in extensions:
-            extension = extension.lower()
-            if(os.path.isfile(f'./cogs/{extension}.py.disabled')):
-                os.rename(f'./cogs/{extension}.py.disabled',f'./cogs/{extension}.py')
-                await ctx.send(f'`Cog {extension} successfully enabled`')
-            else:
-                pass
-    else:
-        for filename in os.listdir('./cogs'):
-            if( filename.endswith('.py.disabled')):
-                os.rename(f'./cogs/{extension}.py.disabled',f'./cogs/{extension}.py')
+    for extension in extensions:
+        extension = extension.lower()
+        if(os.path.isfile(f'./cogs/{extension}.py.disabled')):
+            os.rename(f'./cogs/{extension}.py.disabled',f'./cogs/{extension}.py')
+            await ctx.send(f'`Cog {extension} successfully enabled`')
+        else:
+            pass
+
 
 # sync with github repo
 @bot.command()
