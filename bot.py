@@ -22,8 +22,6 @@ if(not os.path.isfile("./config.json")):
 with open("./config.json", "r") as file:
     config = json.load(file)
 
-TOKEN = config["token"]
-
 # make bot object
 bot = commands.Bot(command_prefix = config["prefix"])
 
@@ -150,6 +148,7 @@ async def ping(ctx):
 
 # end of core function defs
 
+
 # loads all the extensions initally
 for filename in os.listdir('./cogs'):
     if( filename.endswith('.py')):
@@ -157,6 +156,6 @@ for filename in os.listdir('./cogs'):
 
 # finally runs the bot
 try:
-    bot.run(TOKEN)
+    bot.run(config["token"])
 except discord.errors.HTTPException:
     print("Invalid Token Present in Config.")
