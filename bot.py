@@ -8,18 +8,20 @@ import subprocess
 
 '''
 - Notes:
-- From what research I've done it seems like .env and a config.json are both equally good
-- the problem faced right now is the config file syncing...
+- Made a json config instead of a .env file.
+-
 '''
 
 # make a config if it doesn't already exist
 if(not os.path.isfile("./config.json")):
-    execfile('file.py')
+    import setup
     print("Configure the config file, then run again.")
     quit()
 
 # load json config
-config = json.loads("./config.json")
+with open("./config.json", "r") as file:
+    config = json.load(file)
+
 TOKEN = config["token"]
 
 # make bot object
@@ -154,4 +156,7 @@ for filename in os.listdir('./cogs'):
         bot.load_extension(f'cogs.{filename[:-3]}')
 
 # finally runs the bot
-bot.run(TOKEN)
+try:
+    bot.run(TOKEN)
+except discord.errors.HTTPException:
+    print("Invalid Token Present in Config.")
