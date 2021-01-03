@@ -9,7 +9,7 @@ import json
 settings = {
     "token" : "NONE",
     "prefix" : "!",
-    "status" : "In a Meeting...",
+    "status" : "In a Meeting..."
 }
 
 # writes settings to config
