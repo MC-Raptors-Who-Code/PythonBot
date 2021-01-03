@@ -1,4 +1,0 @@
-# .env
-# file containing sensitive vars(api keys) that should not be synced
-DISCORD_TOKEN={YOUR BOT TOKEN GOES HERE}
-.
