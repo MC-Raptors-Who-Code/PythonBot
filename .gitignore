@@ -130,3 +130,6 @@ dmypy.json
 
 # User defined config
 config.json
+
+# Persistent data stored by cogs
+/cogs/cogData/
