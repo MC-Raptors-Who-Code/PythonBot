@@ -21,4 +21,4 @@ class Example_Cog(commands.Cog):
 
 # function that actually gets run when adding a cog
 def setup(bot):
-	bot.add_cog(Test_Cog(bot))
+	bot.add_cog(Example_Cog(bot))
