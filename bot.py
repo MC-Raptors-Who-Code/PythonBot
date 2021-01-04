@@ -7,8 +7,12 @@ from discord.ext import commands
 '''
 - Notes:
 - Made a json config instead of a .env file.
--
+- Should probably write in some type of role check for all the commands pertaining to cogs.
+- Additionally there should be some external way to inject command directly from the run enviorment in my opinion.
+- Further research needed
 '''
+
+# basic setup
 
 # make a config if it doesn't already exist
 if(not os.path.isfile("./config.json")):
@@ -25,16 +29,17 @@ bot = commands.Bot(command_prefix = config["prefix"])
 
 
 
-# start of core function defs
-
-
+# on ready function ergo what the bot does once successfully booting and connecting to discord.
 @bot.event
 async def on_ready():
     await bot.change_presence(status=discord.Status.online, activity=discord.Game(config["status"]))
     print(f'{bot.user} has connected to Discord!')
 
 
-# Function to list all available gears
+
+# functions pertaining to cogs and anything you would want to do with cogs
+
+# Function to list all available cogs
 @bot.command()
 async def listCogs(ctx):
     outStrActive = ""
@@ -137,14 +142,15 @@ async def enableCog(ctx, *extensions):
         else:
             pass
 
+# end of cog function defs
+
 
 # tester ping command
+# remove when moved to production
 @bot.command()
 async def ping(ctx):
     await ctx.send(f'`Pong! {round(bot.latency * 1000)} ms`')
 
-
-# end of core function defs
 
 
 # loads all the extensions initally
