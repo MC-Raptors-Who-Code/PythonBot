@@ -127,3 +127,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# User defined config
+config.json
+
+# Persistent data stored by cogs
+/cogs/cogData/
