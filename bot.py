@@ -25,8 +25,7 @@ with open("./config.json", "r") as file:
     config = json.load(file)
 
 # make bot object
-bot = commands.Bot(command_prefix = config["prefix"])
-
+bot = commands.Bot(command_prefix=config["prefix"])
 
 
 # on ready function ergo what the bot does once successfully booting and connecting to discord.
@@ -34,7 +33,6 @@ bot = commands.Bot(command_prefix = config["prefix"])
 async def on_ready():
     await bot.change_presence(status=discord.Status.online, activity=discord.Game(config["status"]))
     print(f'{bot.user} has connected to Discord!')
-
 
 
 # functions pertaining to cogs and anything you would want to do with cogs
