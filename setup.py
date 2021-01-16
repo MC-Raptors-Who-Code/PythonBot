@@ -7,9 +7,9 @@ import json
 
 # default settings file
 settings = {
-    "token" : "NONE",
-    "prefix" : "!",
-    "status" : "In a Meeting..."
+    "token": "NONE",
+    "prefix": "!",
+    "status": "In a Meeting..."
 }
 
 # writes settings to config
