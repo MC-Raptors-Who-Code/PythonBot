@@ -1,4 +1,5 @@
 # necessary import for cog
+import discord
 from discord.ext import commands
 
 
