@@ -155,7 +155,7 @@ async def ping(ctx):
 
 # loads all the extensions initally
 for filename in os.listdir('./cogs'):
-    if( filename.endswith('.py')):
+    if(filename.endswith('.py')):
         bot.load_extension(f'cogs.{filename[:-3]}')
 
 # finally runs the bot
