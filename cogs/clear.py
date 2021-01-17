@@ -1,5 +1,5 @@
 import discord
-from discord.ext import commandss
+from discord.ext import commands
 
 class Clear(commands.Cog):
 
