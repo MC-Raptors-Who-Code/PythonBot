@@ -1,6 +1,5 @@
-## PythonBot
-Discord bot written in Python.
-
+# PythonBot
+- Discord bot written in Python.
 
 ## Build Status
 |**Branch**|**Build Status**|
